@@ -12,7 +12,7 @@ import boto3
 from botocore.exceptions import ClientError
 
 app = Flask(__name__)
-CORS(app, resources={r"/upload": {"origins": ["http://localhost:3000", "https://hfnc-neurochaos-frontend.vercel.app"]}})
+CORS(app, resources={r"/upload": {"origins": ["http://localhost:3000", "https://hfnc-neurochaos-fvgs-brlm2q88g-jake-thompsons-projects-e8c91d40.vercel.app"]}})
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -25,6 +25,12 @@ s3_client = boto3.client(
 BUCKET_NAME = 'hfnc-neurochaos-eeg'
 
 chaos_grid = ChaosGrid()
+
+@app.route('/')
+def home():
+    """Health check route."""
+    logger.debug("Root route accessed")
+    return "Backend is running!"
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -131,6 +137,3 @@ def upload_file():
             return {'error': f'Invalid EDF file: {str(e)}'}, 400
     logger.error("Only .edf files are allowed")
     return {'error': 'Only .edf files are allowed'}, 400
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
