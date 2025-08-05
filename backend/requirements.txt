@@ -3,5 +3,5 @@ flask-cors==5.0.0
 mne==1.10.0 
 numpy==1.26.4 
 scipy==1.16.0 
-torch==2.7.1 
+torch==2.7.1+cpu
 gunicorn==22.0.0 
