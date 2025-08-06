@@ -24,6 +24,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Initialize ChaosGrid
 chaos_grid = ChaosGrid()
 
+# New root endpoint for health checks
+@app.route('/', methods=['GET', 'HEAD'])
+def health_check():
+    logger.debug("Health check accessed")
+    return {'status': 'OK'}, 200
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     logger.debug("Received upload request")
